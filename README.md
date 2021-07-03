@@ -12,3 +12,7 @@ Initial release of Cheatsheets.
 
 - Fix copy to clipboard.
 - Adjust styling
+
+### 0.0.1
+
+- Fix src attribute
