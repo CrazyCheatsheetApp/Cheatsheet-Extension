@@ -43,7 +43,8 @@ function getWebviewContent() {
   </head>
 
   <body>
-  <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" width="300" />
+  <iframe src="https://crazycheatsheetapp.netlify.app/" width="100%" height="960px" frameBorder="0">
+  </iframe>
   </body>
 
   </html>`;
