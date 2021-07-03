@@ -8,7 +8,7 @@ const vscode = require('vscode');
 /**
  * @param {vscode.ExtensionContext} context
  */
-function activate(context) {
+const activate = (context) => {
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
     console.log('Congratulations, your extension "cheatsheet" is now active!');
@@ -26,30 +26,55 @@ function activate(context) {
             { enableScripts: true } // Webview options. More on these later.
         );
         panel.webview.html = getWebviewContent();
+
+        panel.webview.onDidReceiveMessage(handleMessage);
     });
 
     context.subscriptions.push(disposable);
-}
+};
 
-function getWebviewContent() {
+const getWebviewContent = () => {
     return `<!DOCTYPE html>
   <html lang="en">
   <head>
 	  <meta charset="UTF-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	  <title>Cheat Sheet</title>
+
+      <script>
+        (function() {
+            const vscode = acquireVsCodeApi();
+
+            window.addEventListener('message', (e) => {
+                const data = JSON.parse(e.data);
+                vscode.postMessage(data);
+            });
+        }())
+      </script>
   </head>
 
   <body>
-  <iframe src="https://crazycheatsheetapp.netlify.app/" width="100%" height="1280px" frameBorder="0">
+  <iframe src="http://localhost:3000/" width="100%" height="1280px" frameBorder="0">
   </iframe>
   </body>
 
   </html>`;
-}
+};
+
+const handleMessage = (message) => {
+    console.log('Received from webview', message);
+
+    switch (message.action) {
+        case 'write-clipboard':
+            vscode.env.clipboard.writeText(message.text);
+            break;
+        default:
+            break;
+    }
+};
 
 // this method is called when your extension is deactivated
-function deactivate() {}
+const deactivate = () => {};
 
 module.exports = {
     activate,
