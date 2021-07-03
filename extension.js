@@ -9,32 +9,30 @@ const vscode = require('vscode');
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
+    // Use the console to output diagnostic information (console.log) and errors (console.error)
+    // This line of code will only be executed once when your extension is activated
+    console.log('Congratulations, your extension "cheatsheet" is now active!');
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "cheatsheet" is now active!');
+    // The command has been defined in the package.json file
+    // Now provide the implementation of the command with  registerCommand
+    // The commandId parameter must match the command field in package.json
+    let disposable = vscode.commands.registerCommand('cheatSheet.start', function () {
+        // The code you place here will be executed every time your command is executed
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('cheatSheet.start', function () {
-		// The code you place here will be executed every time your command is executed
+        const panel = vscode.window.createWebviewPanel(
+            'cheatSheet', // Identifies the type of the webview. Used internally
+            'Cheat Sheet', // Title of the panel displayed to the user
+            vscode.ViewColumn.One, // Editor column to show the new webview panel in.
+            { enableScripts: true } // Webview options. More on these later.
+        );
+        panel.webview.html = getWebviewContent();
+    });
 
-		const panel = vscode.window.createWebviewPanel(
-			'cheatSheet', // Identifies the type of the webview. Used internally
-			'Cheat Sheet', // Title of the panel displayed to the user
-			vscode.ViewColumn.One, // Editor column to show the new webview panel in.
-			{enableScripts: true} // Webview options. More on these later.
-		  );
-		  panel.webview.html = getWebviewContent();
-		
-	});
-
-	context.subscriptions.push(disposable);
+    context.subscriptions.push(disposable);
 }
 
 function getWebviewContent() {
-	return `<!DOCTYPE html>
+    return `<!DOCTYPE html>
   <html lang="en">
   <head>
 	  <meta charset="UTF-8">
@@ -43,17 +41,17 @@ function getWebviewContent() {
   </head>
 
   <body>
-  <iframe src="http://localhost:3000/" width="100%" height="1280px" frameBorder="0">
+  <iframe src="https://crazycheatsheetapp.netlify.app/" width="100%" height="1280px" frameBorder="0">
   </iframe>
   </body>
 
   </html>`;
-  }
+}
 
 // this method is called when your extension is deactivated
 function deactivate() {}
 
 module.exports = {
-	activate,
-	deactivate
-}
+    activate,
+    deactivate
+};
