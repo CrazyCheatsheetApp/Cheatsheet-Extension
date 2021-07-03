@@ -43,7 +43,7 @@ function getWebviewContent() {
   </head>
 
   <body>
-  <iframe src="https://crazycheatsheetapp.netlify.app/" width="100%" height="1280px" frameBorder="0">
+  <iframe src="http://localhost:3000/" width="100%" height="1280px" frameBorder="0">
   </iframe>
   </body>
 
