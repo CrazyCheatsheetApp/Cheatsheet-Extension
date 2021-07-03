@@ -51,10 +51,16 @@ const getWebviewContent = () => {
             });
         }())
       </script>
+
+      <style>
+        body {
+            height: 100vh;
+        }
+      </style>
   </head>
 
   <body>
-  <iframe src="https://crazycheatsheetapp.netlify.app/" width="100%" height="1280px" frameBorder="0">
+  <iframe src="http://localhost:3000/" width="100%" height="100%" frameBorder="0">
   </iframe>
   </body>
 
